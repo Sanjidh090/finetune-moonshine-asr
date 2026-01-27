@@ -2,6 +2,10 @@
 
 A comprehensive guide and toolkit for fine-tuning the [Moonshine ASR model](https://github.com/usefulsensors/moonshine) for custom languages and domains.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![HuggingFace Model](https://img.shields.io/badge/🤗-Model%20Card-yellow)](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)
+
 ## 🎯 Overview
 
 This repository provides everything you need to fine-tune Moonshine, a lightweight and efficient automatic speech recognition (ASR) model with only 27M parameters, achieving performance comparable to much larger models.
@@ -15,17 +19,46 @@ This repository provides everything you need to fine-tune Moonshine, a lightweig
 - ✅ ONNX export for 10-30% faster inference
 - ✅ Complete deployment pipeline
 
-## 📊 Results
+## 🎤 Pre-trained Model Available
 
-Fine-tuning Moonshine on French (MLS dataset):
-- **Training**: 8,000 steps with curriculum learning
-- **Final WER**: 21.8% on test set
-- **Inference Speed**: RTF 0.11x (9x faster than real-time on CPU)
+**[moonshine-tiny-fr](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)** - Fine-tuned French ASR model ready to use!
+
+Fine-tuned using this guide on the Multilingual LibriSpeech French dataset:
+- **WER**: 21.8% on test set
 - **Model Size**: Only 27M parameters
+- **Inference Speed**: RTF 0.11x (9x faster than real-time on CPU)
+- **Training**: 8,000 steps with curriculum learning
+
+Try it now:
+```python
+from transformers import pipeline
+
+transcriber = pipeline("automatic-speech-recognition", model="Cornebidouil/moonshine-tiny-fr")
+result = transcriber("french_audio.wav")
+print(result['text'])
+```
+
+**[➡️ View Model Card on HuggingFace](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)**
 
 ## 🚀 Quick Start
 
-### Installation
+### Option 1: Use Pre-trained French Model (Fastest)
+
+```bash
+# Install dependencies
+pip install transformers torch torchaudio
+
+# Use the model
+python
+>>> from transformers import pipeline
+>>> transcriber = pipeline("automatic-speech-recognition", model="Cornebidouil/moonshine-tiny-fr")
+>>> result = transcriber("your_french_audio.wav")
+>>> print(result['text'])
+```
+
+**[📥 Download Model](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)**
+
+### Option 2: Fine-Tune Your Own Model
 
 ```bash
 # Clone the repository
@@ -66,6 +99,49 @@ python scripts/inference.py \
     --model results-moonshine-fr/checkpoint-6000 \
     --audio sample.wav
 ```
+
+## 🌟 Example: Fine-Tuned French Model
+
+This guide was used to create **[moonshine-tiny-fr](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)**, a production-ready French ASR model.
+
+### Model Performance
+
+| Metric | Value |
+|--------|-------|
+| **Word Error Rate (WER)** | 21.8% |
+| **Character Error Rate (CER)** | ~10% |
+| **Inference Speed (CPU)** | 9x faster than real-time |
+| **Model Size** | 27M parameters |
+| **Training Time** | ~24 hours on single GPU |
+
+### Using the Model
+
+**Basic Transcription:**
+```python
+from transformers import pipeline
+
+transcriber = pipeline("automatic-speech-recognition", model="Cornebidouil/moonshine-tiny-fr")
+result = transcriber("french_audio.wav")
+print(result['text'])
+```
+
+**Batch Processing:**
+```python
+from pathlib import Path
+
+audio_files = Path("./audio").glob("*.wav")
+for audio in audio_files:
+    result = transcriber(str(audio))
+    print(f"{audio.name}: {result['text']}")
+```
+
+**Live Transcription:**
+```bash
+# Clone this repo and use inference.py
+python scripts/inference.py --model Cornebidouil/moonshine-tiny-fr --live
+```
+
+**[📖 Full Model Documentation](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)**
 
 ## 📚 Documentation
 
@@ -373,11 +449,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📚 Citation
 
-If you use this guide or code in your research, please cite:
+If you use this guide or the fine-tuned model in your research, please cite:
 
+### This Fine-Tuning Guide
 ```bibtex
-@misc{moonshine-fine-tuning-guide,
-  author = {Pierre Chéneau},
+@misc{cheneau2026moonshine-finetune,
+  author = {Pierre Chéneau (Cornebidouil)},
   title = {Moonshine ASR Fine-Tuning Guide},
   year = {2026},
   publisher = {GitHub},
@@ -385,12 +462,43 @@ If you use this guide or code in your research, please cite:
 }
 ```
 
+### Fine-Tuned French Model
+```bibtex
+@misc{cheneau2026moonshine-tiny-fr,
+  author = {Pierre Chéneau (Cornebidouil)},
+  title = {Moonshine-Tiny-FR: Fine-tuned French Speech Recognition},
+  year = {2026},
+  publisher = {HuggingFace},
+  url = {https://huggingface.co/Cornebidouil/moonshine-tiny-fr}
+}
+```
+
+### Original Moonshine
+```bibtex
+@misc{jeffries2024moonshinespeechrecognitionlive,
+  title={Moonshine: Speech Recognition for Live Transcription and Voice Commands},
+  author={Nat Jeffries and Evan King and Manjunath Kudlur and Guy Nicholson and James Wang and Pete Warden},
+  year={2024},
+  eprint={2410.15608},
+  archivePrefix={arXiv},
+  primaryClass={cs.SD},
+  url={https://arxiv.org/abs/2410.15608}
+}
+```
+
 ## 🔗 Related Resources
 
+### Our Models
+- **[moonshine-tiny-fr](https://huggingface.co/Cornebidouil/moonshine-tiny-fr)** - Fine-tuned French model (ready to use!)
+
+### Original Moonshine
 - [Moonshine Official Repo](https://github.com/usefulsensors/moonshine)
 - [Original Moonshine Paper](https://arxiv.org/abs/2410.15608)
-- [HuggingFace Model Card](https://huggingface.co/UsefulSensors/moonshine-tiny)
-- [Multilingual LibriSpeech](https://www.openslr.org/94/)
+- [Base Model Card](https://huggingface.co/UsefulSensors/moonshine-tiny)
+
+### Datasets
+- [Multilingual LibriSpeech](https://huggingface.co/datasets/facebook/multilingual_librispeech) - Used for French training
+- [Common Voice](https://commonvoice.mozilla.org/) - Alternative dataset
 
 ## Contact
 
