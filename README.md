@@ -392,11 +392,11 @@ If you use this guide or code in your research, please cite:
 - [HuggingFace Model Card](https://huggingface.co/UsefulSensors/moonshine-tiny)
 - [Multilingual LibriSpeech](https://www.openslr.org/94/)
 
-## 📞 Contact
+## Contact
 
 For questions or issues:
-- Open an issue on GitHub
-
+- Open a [GitHub Discussion](https://github.com/pierre-cheneau/finetune-moonshine-asr/discussions)
+- Join our [Discord](https://discord.gg/zE4NRsTGdw) (Hogwarts Legacy Spell Recognition project's discord)
 ---
 
 **Made with ❤️ for the ASR community**
